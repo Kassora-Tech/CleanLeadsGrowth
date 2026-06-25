@@ -2,26 +2,98 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #0B2A4A;
+    --font-poppins: "Poppins", system-ui, sans-serif;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-white text-navy-900 font-sans antialiased;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-extrabold leading-tight tracking-tight text-navy-900;
+  }
+
+  /* Visible focus rings — WCAG AA */
+  :focus-visible {
+    outline: 2px solid #5FBF3F;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Reduced motion — respect user preference */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* CTA Button shine effect */
+  .btn-shine {
+    @apply relative overflow-hidden;
+  }
+  .btn-shine::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.2) 50%,
+      transparent 100%
+    );
+    transform: translateX(-150%);
+    transition: none;
+  }
+  .btn-shine:hover::after {
+    animation: shine 0.55s ease forwards;
+  }
+
+  /* Section container */
+  .container-xl {
+    @apply mx-auto w-full max-w-7xl px-6 lg:px-12;
+  }
+
+  /* Navy card */
+  .card-navy {
+    @apply bg-white rounded-2xl shadow-card border border-slate-200 transition-all duration-300;
+  }
+  .card-navy:hover {
+    @apply shadow-card-hover -translate-y-1;
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  /* Green left-bar card hover accent */
+  .group:hover .green-bar {
+    @apply opacity-100 scale-y-100;
+  }
+  .green-bar {
+    @apply opacity-0 scale-y-0 origin-top transition-all duration-300;
   }
 }
