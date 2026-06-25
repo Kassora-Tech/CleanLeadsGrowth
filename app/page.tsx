@@ -16,6 +16,16 @@ import SiteFooter from "@/components/SiteFooter";
 export const metadata: Metadata = {
   title: `${siteConfig.name} — ${siteConfig.tagline}`,
   description: siteConfig.description,
+  keywords: [
+    "house cleaning service",
+    "office cleaning",
+    "commercial cleaning",
+    "residential cleaning",
+    "cleaning service near me",
+    "book a cleaner",
+    "move out cleaning",
+    "deep clean service",
+  ],
   alternates: { canonical: absoluteUrl("/") },
   openGraph: { url: absoluteUrl("/") },
 };

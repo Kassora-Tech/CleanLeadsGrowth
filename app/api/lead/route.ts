@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { leadSchema } from "@/lib/schemas";
+import { bookingRequestSchema } from "@/lib/schemas";
 
 export async function POST(req: NextRequest) {
   let body: unknown;
@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Validate with shared Zod schema
-  const result = leadSchema.safeParse(body);
+  const result = bookingRequestSchema.safeParse(body);
   if (!result.success) {
     return NextResponse.json(
       { error: "Validation failed", issues: result.error.flatten().fieldErrors },
@@ -18,11 +18,11 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const lead = result.data;
+  const booking = result.data;
 
   // ── CRM / Webhook Integration ─────────────────────────────────────────────
   // TODO: integrate CRM webhook (GoHighLevel / HubSpot / Zapier / Make)
-  // Replace the block below with your webhook call. The payload is already
+  // Replace the block below with your webhook call. The crmPayload is already
   // shaped as clean JSON ready for any platform.
   //
   // Example (GoHighLevel):
@@ -42,36 +42,45 @@ export async function POST(req: NextRequest) {
 
   const crmPayload = {
     // Contact
-    firstName:     lead.name.split(" ")[0] ?? lead.name,
-    lastName:      lead.name.split(" ").slice(1).join(" ") || "",
-    email:         lead.email,
-    phone:         lead.phone,
-    whatsappOptIn: lead.whatsappOptIn ?? false,
+    firstName:      booking.name.split(" ")[0] ?? booking.name,
+    lastName:       booking.name.split(" ").slice(1).join(" ") || "",
+    email:          booking.email,
+    phone:          booking.phone,
+    address:        booking.address,
+    whatsappOptIn:  booking.whatsappOptIn ?? false,
 
-    // Lead details
-    serviceType:  lead.serviceType,
-    serviceArea:  lead.serviceArea,
-    leadVolume:   lead.leadVolume,
+    // Booking request
+    serviceType:    booking.serviceType,
+    frequency:      booking.frequency,
+    estimatedPrice: booking.estimatedPrice,
+
+    // Property details (residential-specific)
+    ...("bedrooms"  in booking ? { bedrooms:  booking.bedrooms }  : {}),
+    ...("bathrooms" in booking ? { bathrooms: booking.bathrooms } : {}),
+
+    // Property details (commercial-specific)
+    ...("sqft"         in booking ? { sqft:         booking.sqft }         : {}),
+    ...("propertyType" in booking ? { propertyType: booking.propertyType } : {}),
 
     // Attribution
-    source:       lead.utm_source  ?? "direct",
-    medium:       lead.utm_medium  ?? "",
-    campaign:     lead.utm_campaign ?? "",
-    content:      lead.utm_content  ?? "",
-    term:         lead.utm_term     ?? "",
+    source:    booking.utm_source   ?? "direct",
+    medium:    booking.utm_medium   ?? "",
+    campaign:  booking.utm_campaign ?? "",
+    content:   booking.utm_content  ?? "",
+    term:      booking.utm_term     ?? "",
 
     // Metadata
-    submittedAt:  lead.submittedAt ?? new Date().toISOString(),
-    pageUrl:      lead.pageUrl ?? "",
+    submittedAt: booking.submittedAt ?? new Date().toISOString(),
+    pageUrl:     booking.pageUrl ?? "",
   };
 
   // Log in development only
   if (process.env.NODE_ENV === "development") {
-    console.log("[/api/lead] New lead received:", JSON.stringify(crmPayload, null, 2));
+    console.log("[/api/lead] New booking request received:", JSON.stringify(crmPayload, null, 2));
   }
 
   return NextResponse.json(
-    { success: true, message: "Lead received. We'll be in touch within 24 hours." },
+    { success: true, message: "Request received. We'll be in touch within 24 hours." },
     { status: 200 },
   );
 }

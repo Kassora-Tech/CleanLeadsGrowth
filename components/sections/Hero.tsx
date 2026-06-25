@@ -19,7 +19,6 @@ function useCountUp(target: number, duration = 1800, start = false, isDecimal = 
     const tick = (now: number) => {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      // ease-out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
       setCount(isDecimal ? Math.round(target * eased * 10) / 10 : Math.floor(target * eased));
       if (progress < 1) rafRef.current = requestAnimationFrame(tick);
@@ -33,19 +32,10 @@ function useCountUp(target: number, duration = 1800, start = false, isDecimal = 
 
 // ── Single stat counter ───────────────────────────────────────────────────────
 function StatCounter({
-  value,
-  suffix,
-  label,
-  isDecimal,
-  started,
-  delay,
+  value, suffix, label, isDecimal, started, delay,
 }: {
-  value: number;
-  suffix: string;
-  label: string;
-  isDecimal?: boolean;
-  started: boolean;
-  delay: number;
+  value: number; suffix: string; label: string;
+  isDecimal?: boolean; started: boolean; delay: number;
 }) {
   const [localStart, setLocalStart] = useState(false);
   useEffect(() => {
@@ -68,7 +58,6 @@ function StatCounter({
           {isDecimal ? count.toFixed(1) : count}
           {suffix}
         </span>
-        {/* Green underline draws in after count completes */}
         <motion.div
           className="absolute -bottom-1 left-0 h-0.5 bg-green-500 rounded-full"
           initial={{ scaleX: 0 }}
@@ -123,7 +112,7 @@ export default function Hero() {
             >
               <span className="inline-flex items-center gap-2 bg-green-500/15 border border-green-500/30 text-green-400 text-xs font-semibold uppercase tracking-widest px-4 py-2 rounded-full">
                 <CheckCircle className="h-3.5 w-3.5" aria-hidden="true" />
-                Exclusive Leads — Not Shared, Not Recycled
+                Trusted, Insured & Background-Checked [CLIENT TO CONFIRM]
               </span>
             </motion.div>
 
@@ -134,8 +123,8 @@ export default function Hero() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.55, delay: 0.1 }}
             >
-              More Cleanings.{" "}
-              <span className="text-green-400">More Clients.</span>
+              Book a Reliable{" "}
+              <span className="text-green-400">Clean in Minutes.</span>
             </motion.h1>
 
             {/* Subheadline */}
@@ -145,9 +134,8 @@ export default function Hero() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.55, delay: 0.2 }}
             >
-              We deliver exclusive, pre-screened cleaning leads directly to your
-              inbox — real people ready to book, not tire-kickers. You focus on
-              cleaning. We fill your calendar.
+              Professional residential and commercial cleaning — get a free instant
+              estimate online and we&apos;ll confirm your booking within 24 hours.
             </motion.p>
 
             {/* CTAs */}
@@ -159,7 +147,7 @@ export default function Hero() {
             >
               <Button asChild variant="primary" size="lg">
                 <Link href="/get-quote">
-                  Get Your Leads Today
+                  Get a Free Quote
                   <ArrowRight className="h-5 w-5" aria-hidden="true" />
                 </Link>
               </Button>
@@ -168,7 +156,7 @@ export default function Hero() {
               </Button>
             </motion.div>
 
-            {/* Stats strip — count-up on mount */}
+            {/* Stats strip */}
             <motion.div
               className="grid grid-cols-3 gap-6 pt-4 border-t border-white/10"
               initial={{ opacity: 0 }}
@@ -188,7 +176,6 @@ export default function Hero() {
               ))}
             </motion.div>
 
-            {/* Note */}
             <p className="text-2xs text-navy-400 -mt-2">
               [CLIENT TO PROVIDE REAL STATS]
             </p>
@@ -201,16 +188,13 @@ export default function Hero() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
-            {/* Image container — fixed dimensions prevent CLS */}
             {/* PLACEHOLDER — replace src with real hero photo (recommended: 900×1100px) */}
             <div className="relative w-[420px] h-[520px] rounded-t-3xl overflow-hidden bg-navy-800">
-              {/* Placeholder gradient shown until real image is added */}
               <div className="absolute inset-0 bg-gradient-to-b from-navy-700 to-navy-900 flex items-center justify-center">
                 <p className="text-navy-400 text-sm text-center px-4">
                   [PLACEHOLDER — Hero cleaner photo<br />900×1100px recommended]
                 </p>
               </div>
-              {/* Gradient fade at bottom to blend into section */}
               <div
                 className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-navy-950/60 to-transparent"
                 aria-hidden="true"
@@ -232,24 +216,18 @@ export default function Hero() {
                   <CheckCircle className="h-4 w-4 text-white" aria-hidden="true" />
                 </div>
                 <p className="text-xs font-bold text-navy-900 leading-tight">
-                  Quality Leads.
-                  <br />Real People.
-                  <br />Real Bookings.
+                  Professional.
+                  <br />Insured.
+                  <br />Guaranteed.
                 </p>
               </div>
               <div className="flex items-center gap-1 mt-3 pt-3 border-t border-slate-100">
                 {[1, 2, 3, 4, 5].map((s) => (
-                  <svg
-                    key={s}
-                    className="h-3.5 w-3.5 text-green-500"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    aria-hidden="true"
-                  >
+                  <svg key={s} className="h-3.5 w-3.5 text-green-500" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                   </svg>
                 ))}
-                <span className="text-2xs text-slate-500 ml-1 font-medium">4.8/5</span>
+                <span className="text-2xs text-slate-500 ml-1 font-medium">4.9/5</span>
               </div>
             </motion.div>
           </motion.div>

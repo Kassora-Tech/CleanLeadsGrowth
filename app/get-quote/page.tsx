@@ -5,20 +5,20 @@ import { Container } from "@/components/ui/Section";
 import QuoteForm from "@/components/forms/QuoteForm";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
-import { CheckCircle } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 
 export const metadata: Metadata = {
-  title:       "Get a Quote — Exclusive Cleaning Leads",
-  description: `Request your exclusive cleaning leads from ${siteConfig.name}. Tell us your service area and lead volume — we'll be in touch within 24 hours.`,
+  title:       "Get a Free Quote — Professional Cleaning Services",
+  description: `Request a free instant estimate from ${siteConfig.name}. Residential and commercial cleaning — tell us about your property and get a price in under 2 minutes.`,
   alternates:  { canonical: absoluteUrl("/get-quote") },
 };
 
 const benefits = [
-  "Exclusive leads — never shared with another contractor",
-  "Pre-screened for genuine booking intent",
-  "Delivered in real time to your email or SMS",
-  "100% Lead Replacement Guarantee",
-  "No long-term contracts — cancel anytime",
+  "Instant estimate — no waiting, no sales calls",
+  "Residential and commercial cleaning covered",
+  "Flexible one-time or recurring bookings",
+  "100% satisfaction guarantee",
+  "Fully insured and background-checked team [CLIENT TO CONFIRM]",
 ];
 
 export default function GetQuotePage() {
@@ -32,19 +32,19 @@ export default function GetQuotePage() {
             {/* Left: copy */}
             <div className="text-white pt-4">
               <p className="text-green-400 text-sm font-semibold uppercase tracking-widest mb-3">
-                Get Your Leads
+                Free Quote
               </p>
               <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tighter mb-6 text-balance">
-                Start Filling Your Calendar With Booked Jobs
+                Book a Professional Clean in Minutes
               </h1>
               <p className="text-navy-200 text-lg leading-relaxed mb-8">
-                Complete the short form and we&apos;ll review your service area, confirm your lead type,
-                and get your first batch of exclusive leads ready — usually within 24 hours.
+                Complete the short form — we&apos;ll show you an instant estimate,
+                then confirm your booking within 24 hours.
               </p>
               <ul className="flex flex-col gap-3">
                 {benefits.map((b) => (
                   <li key={b} className="flex items-start gap-2.5 text-navy-100 text-sm">
-                    <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                    <ShieldCheck className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
                     {b}
                   </li>
                 ))}

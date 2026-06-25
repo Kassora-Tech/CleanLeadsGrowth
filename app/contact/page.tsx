@@ -9,7 +9,7 @@ import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
-  title:       "Contact Us — Cleaning Leads Support",
+  title:       "Contact Us — Cleaning Services",
   description: `Get in touch with ${siteConfig.name}. Call, WhatsApp, or email us — we respond within 1 business day.`,
   alternates:  { canonical: absoluteUrl("/contact") },
 };
@@ -26,7 +26,7 @@ const contactMethods = [
     icon: MessageCircle,
     label: "WhatsApp",
     value: "Chat with us",
-    href: `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent("Hi! I have a question about cleaning leads.")}`,
+    href: `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent("Hi! I have a question about your cleaning services.")}`,
     description: "Usually replies within the hour",
     external: true,
   },
@@ -59,7 +59,7 @@ export default function ContactPage() {
               We&apos;re Here to Help
             </h1>
             <p className="text-navy-200 text-lg leading-relaxed">
-              Have a question about leads, pricing, or your account? Reach us by
+              Have a question about booking, pricing, or your service? Reach us by
               phone, WhatsApp, or the form below — we respond fast.
             </p>
           </div>

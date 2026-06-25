@@ -11,7 +11,6 @@ export default function FinalCTA() {
 
   return (
     <Section bg="navy" className="relative overflow-hidden">
-      {/* Background accent */}
       <div
         className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-5 pointer-events-none"
         style={{ background: "radial-gradient(circle, #5FBF3F, transparent 70%)" }}
@@ -30,12 +29,12 @@ export default function FinalCTA() {
               Get Started Today
             </p>
             <h2 className="text-4xl lg:text-5xl font-extrabold text-white tracking-tighter mb-4 text-balance">
-              Stop Chasing Leads.{" "}
-              <span className="text-green-400">Start Getting Cleanings.</span>
+              A Cleaner Space Starts{" "}
+              <span className="text-green-400">Right Here.</span>
             </h2>
             <p className="text-navy-200 text-lg leading-relaxed">
-              Fill out the form below and we&apos;ll review your service area and
-              reach out within 24 hours with your first lead batch.
+              Get a free instant estimate in under 2 minutes. We&apos;ll confirm
+              your booking within 24 hours.
             </p>
           </motion.div>
 

@@ -34,7 +34,8 @@ export default function ServicePage({ params }: Props) {
   const service = getServiceBySlug(params.slug);
   if (!service) notFound();
 
-  const related = services.filter((s) => service.relatedSlugs.includes(s.slug));
+  const otherServices = services.filter((s) => s.slug !== service.slug);
+  const defaultServiceType = service.slug === "residential" ? "residential" : "commercial";
 
   return (
     <>
@@ -45,7 +46,7 @@ export default function ServicePage({ params }: Props) {
         <Container>
           <div className="max-w-3xl pb-16">
             <p className="text-green-400 text-sm font-semibold uppercase tracking-widest mb-3">
-              Exclusive Leads
+              Professional Cleaning
             </p>
             <h1 className="text-4xl lg:text-6xl font-extrabold text-white tracking-tighter mb-6 text-balance">
               {service.h1}
@@ -53,7 +54,7 @@ export default function ServicePage({ params }: Props) {
             <p className="text-navy-200 text-lg leading-relaxed mb-8">{service.intro}</p>
             <Button asChild variant="primary" size="lg">
               <Link href="/get-quote">
-                Get These Leads <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                Get a Free Quote <ArrowRight className="h-5 w-5" aria-hidden="true" />
               </Link>
             </Button>
           </div>
@@ -62,20 +63,19 @@ export default function ServicePage({ params }: Props) {
 
       <Divider variant="down" fill="fill-white" />
 
-      {/* Sourcing explainer */}
+      {/* What's included */}
       <Section bg="white">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div>
               <p className="text-green-600 text-sm font-semibold uppercase tracking-widest mb-3">
-                How We Source Them
+                What&apos;s Included
               </p>
               <h2 className="text-3xl lg:text-4xl font-extrabold text-navy-900 tracking-tighter mb-6">
-                Only Pre-Screened Leads Reach You
+                Every Standard Clean Includes
               </h2>
-              <p className="text-slate-600 leading-relaxed mb-6">{service.sourcingExplainer}</p>
               <ul className="flex flex-col gap-3">
-                {["Verified contact info", "Confirmed service intent", "Exclusive — sent to you only", "Real-time delivery"].map((item) => (
+                {service.whatIsIncluded.map((item) => (
                   <li key={item} className="flex items-center gap-2.5 text-navy-800 font-medium text-sm">
                     <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" aria-hidden="true" />
                     {item}
@@ -83,11 +83,20 @@ export default function ServicePage({ params }: Props) {
                 ))}
               </ul>
             </div>
+
+            {/* Add-ons */}
             <div className="bg-navy-50 rounded-2xl border border-slate-200 p-8">
-              <p className="text-slate-500 text-xs uppercase tracking-widest font-semibold mb-1">Why It Matters</p>
-              <p className="text-navy-900 text-lg font-semibold leading-relaxed">
-                {service.seoCopy}
+              <p className="text-slate-500 text-xs uppercase tracking-widest font-semibold mb-3">
+                Optional Add-Ons
               </p>
+              <ul className="flex flex-col gap-4">
+                {service.addOns.map((addon) => (
+                  <li key={addon.name} className="flex flex-col gap-0.5">
+                    <span className="font-semibold text-navy-900 text-sm">{addon.name}</span>
+                    <span className="text-slate-500 text-xs leading-relaxed">{addon.description}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </Container>
@@ -95,29 +104,32 @@ export default function ServicePage({ params }: Props) {
 
       <Divider variant="down" fill="fill-navy-50" />
 
-      {/* Case study */}
+      {/* Customer testimonial */}
       <Section bg="light">
         <Container>
           <div className="max-w-2xl mx-auto text-center">
             <p className="text-green-600 text-sm font-semibold uppercase tracking-widest mb-3">
-              Client Result [PLACEHOLDER]
+              Customer Review [PLACEHOLDER]
             </p>
             <h2 className="text-3xl font-extrabold text-navy-900 tracking-tighter mb-8">
-              Real Results from Real Cleaning Businesses
+              What Our Customers Say
             </h2>
             <div className="bg-white rounded-2xl border border-slate-200 shadow-card p-8 text-left">
               <Quote className="h-8 w-8 text-green-500 mb-4" aria-hidden="true" />
               <blockquote>
                 <p className="text-navy-800 text-lg leading-relaxed italic mb-6">
-                  &#34;{service.caseStudy.quote}&#34;
+                  &#34;{service.testimonial.quote}&#34;
                 </p>
                 <footer>
-                  <div className="font-bold text-navy-900">{service.caseStudy.businessName}</div>
-                  <div className="text-slate-500 text-sm">{service.caseStudy.location}</div>
-                  <div className="mt-3 inline-flex items-center gap-2 bg-green-50 border border-green-200 rounded-full px-4 py-1.5 text-green-700 text-sm font-semibold">
-                    <CheckCircle className="h-4 w-4" aria-hidden="true" />
-                    {service.caseStudy.result}
+                  <div className="flex gap-0.5 mb-3">
+                    {Array.from({ length: service.testimonial.rating }, (_, i) => (
+                      <svg key={i} className="h-4 w-4 text-green-500" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
                   </div>
+                  <div className="font-bold text-navy-900">{service.testimonial.name}</div>
+                  <div className="text-slate-500 text-sm">{service.testimonial.location}</div>
                 </footer>
               </blockquote>
             </div>
@@ -133,38 +145,40 @@ export default function ServicePage({ params }: Props) {
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-10">
               <h2 className="text-3xl lg:text-4xl font-extrabold text-white tracking-tighter mb-3">
-                Start Receiving {service.h1.split(" ")[0]} Leads Today
+                Get a Free Quote for {service.h1}
               </h2>
-              <p className="text-navy-200">Fill out the form and we&apos;ll be in touch within 24 hours.</p>
+              <p className="text-navy-200">
+                Instant estimate, confirmed booking within 24 hours.
+              </p>
             </div>
-            <QuoteForm variant="embedded" />
+            <QuoteForm variant="embedded" defaultServiceType={defaultServiceType} />
           </div>
         </Container>
       </Section>
 
-      {/* Related services */}
-      {related.length > 0 && (
+      {/* Other services */}
+      {otherServices.length > 0 && (
         <>
           <Divider variant="down" fill="fill-white" />
           <Section bg="white" tight>
             <Container>
-              <h2 className="text-2xl font-bold text-navy-900 mb-6">Other Lead Types We Offer</h2>
+              <h2 className="text-2xl font-bold text-navy-900 mb-6">Other Services We Offer</h2>
               <div className="flex flex-wrap gap-3">
-                {related.map((r) => (
+                {otherServices.map((s) => (
                   <Link
-                    key={r.slug}
-                    href={`/services/${r.slug}`}
+                    key={s.slug}
+                    href={`/services/${s.slug}`}
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border-2 border-navy-900 text-navy-900 text-sm font-semibold hover:bg-navy-900 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
                   >
-                    {r.h1.replace(" for Cleaning Companies", "")}
+                    {s.h1}
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 ))}
                 <Link
-                  href="/pricing"
+                  href="/get-quote"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-green-500 text-white text-sm font-semibold hover:bg-green-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
                 >
-                  See Pricing <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  Get a Quote <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
               </div>
             </Container>

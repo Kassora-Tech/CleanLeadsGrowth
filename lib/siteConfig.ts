@@ -5,10 +5,10 @@ export const siteConfig = {
   // PLACEHOLDER — client to confirm
   name: "CleanLeadsGrowth",
   // PLACEHOLDER — client to confirm
-  tagline: "More Cleanings. More Clients.",
+  tagline: "Book a Reliable Clean in Minutes",
   // PLACEHOLDER — client to confirm
   description:
-    "Exclusive, pre-screened cleaning leads delivered in real time to residential and commercial cleaning businesses across the US.",
+    "Professional residential and commercial cleaning services. Request a free quote online and get an instant estimate — we handle homes, offices, and move-in/move-out cleans across the US.",
   // PLACEHOLDER — client to confirm
   domain: "cleaningleadsgrowth.com",
 
@@ -30,27 +30,27 @@ export const siteConfig = {
   // Business hours — PLACEHOLDER — client to confirm
   businessHours: "Mon–Fri 9am–6pm EST",
 
-  // Navigation
+  // Navigation — updated for consumer site
   nav: [
-    { label: "How It Works", href: "/#how-it-works" },
-    { label: "Services",     href: "/#services" },
-    { label: "Pricing",      href: "/pricing" },
-    { label: "About",        href: "/about" },
-    { label: "Contact",      href: "/contact" },
+    { label: "Residential",   href: "/services/residential" },
+    { label: "Commercial",    href: "/services/commercial" },
+    { label: "How It Works",  href: "/#how-it-works" },
+    { label: "Reviews",       href: "/#reviews" },
+    { label: "Contact",       href: "/contact" },
   ],
 
   // Stats shown in hero — PLACEHOLDER — client to provide real numbers
   heroStats: [
-    { value: 500,  suffix: "+",  label: "Leads Delivered / Month" },
-    { value: 92,   suffix: "%",  label: "Lead-to-Quote Rate" },
-    { value: 4.8,  suffix: "★",  label: "Avg. Client Rating", isDecimal: true },
+    { value: 5,    suffix: "+",  label: "Years in Business",         isDecimal: false },
+    { value: 1200, suffix: "+",  label: "Jobs Completed",            isDecimal: false },
+    { value: 4.9,  suffix: "★",  label: "Avg. Customer Rating",     isDecimal: true  },
   ],
 
-  // Guarantees bar copy
+  // Guarantees bar copy — consumer-facing
   guarantees: [
-    { icon: "RefreshCw",   text: "100% Lead Replacement Guarantee" },
-    { icon: "Shield",      text: "Privacy Respected — Your Data Stays Yours" },
-    { icon: "Unlock",      text: "No Long-Term Contracts" },
+    { icon: "ShieldCheck", text: "Fully Insured & Background-Checked" },
+    { icon: "ThumbsUp",    text: "100% Satisfaction Guarantee" },
+    { icon: "Unlock",      text: "No Lock-In — Book Once or Recurring" },
   ],
 } as const;
 

@@ -2,33 +2,33 @@
 
 import { useRef } from "react";
 import { useInView, motion } from "framer-motion";
-import { Target, UserCheck, Zap, CalendarCheck } from "lucide-react";
+import { ClipboardList, Calculator, CalendarCheck, Sparkles } from "lucide-react";
 import { Section, Container, SectionHeader } from "@/components/ui/Section";
 
 const steps = [
   {
-    icon: Target,
+    icon: ClipboardList,
     number: "01",
-    title: "Exclusive Leads Sourced",
-    body: "We run targeted campaigns to attract cleaning customers in your service area. Every lead is captured fresh — never scraped from a list.",
+    title: "Request Your Quote",
+    body: "Fill out our short 5-step form — select your service type, property details, and how often you need us. Takes under 2 minutes.",
   },
   {
-    icon: UserCheck,
+    icon: Calculator,
     number: "02",
-    title: "Pre-Screened for Intent",
-    body: "Each lead is verified for a real address, genuine service intent, and budget alignment before it ever reaches you. No tire-kickers.",
-  },
-  {
-    icon: Zap,
-    number: "03",
-    title: "Real-Time Delivery",
-    body: "The moment a lead qualifies, it lands in your inbox and/or CRM. First-mover advantage is the difference between a booked job and a missed one.",
+    title: "Get an Instant Estimate",
+    body: "See your estimated price right away. No waiting, no sales calls — just a transparent starting price based on your property.",
   },
   {
     icon: CalendarCheck,
+    number: "03",
+    title: "Confirm Your Booking",
+    body: "We call you within 24 hours to confirm the details, answer any questions, and lock in your preferred date and time.",
+  },
+  {
+    icon: Sparkles,
     number: "04",
-    title: "You Get More Bookings",
-    body: "Contact the lead while they're still warm. Our clients average a 92% quote rate when they respond within 15 minutes. [CLIENT TO PROVIDE REAL STATS]",
+    title: "We Clean — You Relax",
+    body: "Our professional, insured cleaners arrive on time and get to work. Satisfaction guaranteed or we'll come back and fix it.",
   },
 ] as const;
 
@@ -49,7 +49,7 @@ export default function HowItWorks() {
         <SectionHeader
           eyebrow="Simple Process"
           heading="How It Works"
-          subheading="From campaign to confirmed booking — here's exactly what happens when you work with us."
+          subheading="From quote request to a sparkling clean space — here's exactly what to expect."
           light
         />
 
@@ -64,31 +64,27 @@ export default function HowItWorks() {
                 transition={{ duration: 0.5, delay: i * 0.12, ease: "easeOut" }}
                 className="relative"
               >
-                {/* Connector line between steps (hidden on last) */}
+                {/* Connector line between steps */}
                 {i < steps.length - 1 && (
                   <div
-                    className="hidden lg:block absolute top-8 left-[calc(100%+12px)] w-full h-px bg-white/10"
+                    className="hidden lg:block absolute top-8 left-[calc(100%+12px)] h-px bg-white/10"
                     style={{ width: "calc(100% - 32px)" }}
                     aria-hidden="true"
                   />
                 )}
 
                 <div className="flex flex-col gap-4">
-                  {/* Icon circle */}
                   <div className="relative w-16 h-16">
                     <div className="w-16 h-16 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center">
                       <Icon className="h-7 w-7 text-green-400" aria-hidden="true" />
                     </div>
-                    {/* Step number badge */}
                     <span className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-green-500 text-white text-xs font-bold flex items-center justify-center">
                       {step.number.replace("0", "")}
                     </span>
                   </div>
 
                   <div>
-                    <h3 className="text-white font-bold text-lg mb-2 leading-tight">
-                      {step.title}
-                    </h3>
+                    <h3 className="text-white font-bold text-lg mb-2 leading-tight">{step.title}</h3>
                     <p className="text-navy-200 text-sm leading-relaxed">{step.body}</p>
                   </div>
                 </div>

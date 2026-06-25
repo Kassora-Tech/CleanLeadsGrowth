@@ -16,13 +16,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url:             absoluteUrl("/get-quote"),
       lastModified:    new Date(),
       changeFrequency: "monthly",
-      priority:        0.9,
+      priority:        0.95,
     },
     {
       url:             absoluteUrl("/pricing"),
       lastModified:    new Date(),
       changeFrequency: "monthly",
-      priority:        0.8,
+      priority:        0.7,
     },
     {
       url:             absoluteUrl("/about"),
@@ -42,7 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url:             absoluteUrl(`/services/${slug}`),
     lastModified:    new Date(),
     changeFrequency: "monthly" as const,
-    priority:        0.85,
+    priority:        0.9,
   }));
 
   return [...staticRoutes, ...serviceRoutes];

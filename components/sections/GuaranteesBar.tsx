@@ -2,13 +2,13 @@
 
 import { useRef } from "react";
 import { useInView, motion } from "framer-motion";
-import { RefreshCw, Shield, Unlock } from "lucide-react";
+import { ShieldCheck, ThumbsUp, Unlock } from "lucide-react";
 import { siteConfig } from "@/lib/siteConfig";
 import { Section, Container } from "@/components/ui/Section";
 
 const iconMap = {
-  RefreshCw,
-  Shield,
+  ShieldCheck,
+  ThumbsUp,
   Unlock,
 } as const;
 

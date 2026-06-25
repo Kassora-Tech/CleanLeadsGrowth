@@ -2,29 +2,29 @@
 
 import { useRef } from "react";
 import { useInView, motion } from "framer-motion";
-import { Star, Users, TrendingUp, Headphones } from "lucide-react";
+import { ShieldCheck, Clock, Smile, Headphones } from "lucide-react";
 import { Section, Container, SectionHeader } from "@/components/ui/Section";
 
 const pillars = [
   {
-    icon: Star,
-    title: "High-Quality Leads",
-    body: "Every lead is verified for intent, location, and contact accuracy before delivery. You're not buying a list — you're buying a booked-job opportunity.",
+    icon: ShieldCheck,
+    title: "Fully Insured & Vetted",
+    body: "Every cleaner is background-checked, insured, and trained to our standards before they ever step into a client's property. [CLIENT TO CONFIRM]",
   },
   {
-    icon: Users,
-    title: "Trusted by Cleaning Pros",
-    body: "Hundreds of residential and commercial cleaning businesses across the US rely on our leads to fill their calendars every single month. [PLACEHOLDER]",
+    icon: Clock,
+    title: "Reliable & On-Time",
+    body: "We show up when we say we will. If anything changes, you'll hear from us with plenty of notice — never a no-show. [CLIENT TO CONFIRM]",
   },
   {
-    icon: TrendingUp,
-    title: "Affordable & Scalable",
-    body: "Start with the volume you can handle. Scale up as your team grows. No minimum commitment, no wasted budget on leads outside your area.",
+    icon: Smile,
+    title: "Satisfaction Guaranteed",
+    body: "Not happy with any part of the clean? We'll come back and make it right, free of charge. No arguments, no fine print.",
   },
   {
     icon: Headphones,
-    title: "Dedicated Support",
-    body: "You'll have a real person to call or WhatsApp when you have questions. We don't disappear after the sale — we're invested in your bookings.",
+    title: "Easy to Reach",
+    body: "Call, email, or WhatsApp us — a real person responds. We're here before, during, and after every booking.",
   },
 ] as const;
 
@@ -37,8 +37,8 @@ export default function WhyChooseUs() {
       <Container ref={ref}>
         <SectionHeader
           eyebrow="Why Us"
-          heading="Built for Cleaning Businesses, Not Generic Lead Buyers"
-          subheading="We don't sell leads to lawyers, roofers, or plumbers. We do one thing: get cleaning businesses more booked jobs."
+          heading="Cleaning You Can Actually Count On"
+          subheading="We&apos;re not a marketplace — we&apos;re the cleaning company. One team, one standard, every time."
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -56,9 +56,7 @@ export default function WhyChooseUs() {
                   <Icon className="h-6 w-6 text-green-400" aria-hidden="true" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-navy-900 text-base mb-2 leading-tight">
-                    {pillar.title}
-                  </h3>
+                  <h3 className="font-bold text-navy-900 text-base mb-2 leading-tight">{pillar.title}</h3>
                   <p className="text-slate-600 text-sm leading-relaxed">{pillar.body}</p>
                 </div>
               </motion.div>

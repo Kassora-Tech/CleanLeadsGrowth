@@ -1,37 +1,40 @@
 import { z } from "zod";
 
-// Shared Zod schemas — used by both client forms and the API route handler.
+// Shared Zod schemas — used by both the client quote form and the /api/lead route.
 
-export const serviceTypes = [
-  "residential-cleaning",
-  "commercial-cleaning",
-  "move-in-move-out",
-  "carpet-upholstery",
-  "window-pressure-washing",
-  "other",
-] as const;
+// ── Enums ─────────────────────────────────────────────────────────────────────
 
-export const leadVolumeOptions = [
-  "1-10",
-  "11-25",
-  "26-50",
-  "50+",
-] as const;
+export const serviceTypes = ["residential", "commercial"] as const;
 
-// Step schemas (used per-step for partial validation)
+export const bedroomOptions   = ["studio", "1", "2", "3", "4+"] as const;
+export const bathroomOptions  = ["1", "2", "3+"] as const;
+export const sqftOptions      = ["under-1000", "1001-3000", "3001-5000", "5001+"] as const;
+export const propertyTypes    = ["office", "retail", "warehouse", "medical", "other"] as const;
+export const frequencyOptions = ["one-time", "weekly", "biweekly", "monthly"] as const;
+
+// ── Step schemas (per-step partial validation) ────────────────────────────────
+
 export const step1Schema = z.object({
-  serviceType: z.enum(serviceTypes, "Please select your primary service type."),
+  serviceType: z.enum(serviceTypes, { error: "Please select a service type." }),
 });
 
-export const step2Schema = z.object({
-  serviceArea: z
-    .string()
-    .min(2, "Please enter your city or service area.")
-    .max(100, "Service area too long."),
-  leadVolume: z.enum(leadVolumeOptions, "Please select a lead volume."),
+export const step2ResidentialSchema = z.object({
+  bedrooms:  z.enum(bedroomOptions,  { error: "Please select bedroom count." }),
+  bathrooms: z.enum(bathroomOptions, { error: "Please select bathroom count." }),
+});
+
+export const step2CommercialSchema = z.object({
+  sqft:         z.enum(sqftOptions,     { error: "Please select a size range." }),
+  propertyType: z.enum(propertyTypes,   { error: "Please select property type." }),
 });
 
 export const step3Schema = z.object({
+  frequency: z.enum(frequencyOptions, { error: "Please select a frequency." }),
+});
+
+// Step 4 is estimate display — no input schema needed.
+
+export const step5Schema = z.object({
   name: z
     .string()
     .min(2, "Please enter your full name.")
@@ -42,21 +45,51 @@ export const step3Schema = z.object({
     .max(20, "Phone number too long.")
     .regex(/^[0-9\s\-\+\(\)\.]+$/, "Invalid phone number format."),
   email: z.string().email("Please enter a valid email address."),
+  address: z
+    .string()
+    .min(2, "Please enter your suburb or city.")
+    .max(120, "Address too long."),
   whatsappOptIn: z.boolean().optional(),
 });
 
-// Full lead schema — includes hidden UTM + metadata fields
-export const leadSchema = step1Schema.merge(step2Schema).merge(step3Schema).extend({
-  utm_source:   z.string().optional(),
-  utm_medium:   z.string().optional(),
-  utm_campaign: z.string().optional(),
-  utm_content:  z.string().optional(),
-  utm_term:     z.string().optional(),
-  submittedAt:  z.string().datetime().optional(),
-  pageUrl:      z.string().optional(),
-});
+// ── Full booking-request schema ───────────────────────────────────────────────
 
-export type LeadFormData = z.infer<typeof leadSchema>;
-export type Step1Data   = z.infer<typeof step1Schema>;
-export type Step2Data   = z.infer<typeof step2Schema>;
-export type Step3Data   = z.infer<typeof step3Schema>;
+const residentialPayload = step1Schema
+  .merge(step2ResidentialSchema)
+  .merge(step3Schema)
+  .merge(step5Schema)
+  .extend({
+    estimatedPrice: z.number(),
+    utm_source:    z.string().optional(),
+    utm_medium:    z.string().optional(),
+    utm_campaign:  z.string().optional(),
+    utm_content:   z.string().optional(),
+    utm_term:      z.string().optional(),
+    submittedAt:   z.string().datetime().optional(),
+    pageUrl:       z.string().optional(),
+  });
+
+const commercialPayload = step1Schema
+  .merge(step2CommercialSchema)
+  .merge(step3Schema)
+  .merge(step5Schema)
+  .extend({
+    estimatedPrice: z.number(),
+    utm_source:    z.string().optional(),
+    utm_medium:    z.string().optional(),
+    utm_campaign:  z.string().optional(),
+    utm_content:   z.string().optional(),
+    utm_term:      z.string().optional(),
+    submittedAt:   z.string().datetime().optional(),
+    pageUrl:       z.string().optional(),
+  });
+
+// Union — validated by serviceType discriminant at the API route
+export const bookingRequestSchema = z.union([residentialPayload, commercialPayload]);
+
+export type BookingRequest    = z.infer<typeof bookingRequestSchema>;
+export type Step1Data         = z.infer<typeof step1Schema>;
+export type Step2ResData      = z.infer<typeof step2ResidentialSchema>;
+export type Step2ComData      = z.infer<typeof step2CommercialSchema>;
+export type Step3Data         = z.infer<typeof step3Schema>;
+export type Step5Data         = z.infer<typeof step5Schema>;

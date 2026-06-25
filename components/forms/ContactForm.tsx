@@ -32,10 +32,10 @@ export default function ContactForm() {
     setSubmitting(true);
     setError("");
     try {
-      await fetch("/api/lead", {
+      await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, serviceType: "other", leadVolume: "1-10", serviceArea: "N/A" }),
+        body: JSON.stringify(data),
       });
       setSubmitted(true);
     } catch {
@@ -93,7 +93,7 @@ export default function ContactForm() {
         <textarea
           id="message"
           rows={4}
-          placeholder="Tell us about your cleaning business and what you're looking for…"
+          placeholder="Tell us what you need — we'll get back to you within 1 business day."
           className={cn(inputBase, "py-3 resize-none")}
           aria-invalid={!!errors.message}
           {...register("message")}

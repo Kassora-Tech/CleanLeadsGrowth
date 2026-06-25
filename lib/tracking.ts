@@ -16,6 +16,10 @@ type EventParams = Record<string, string | number | boolean | undefined>;
 
 function ga(eventName: string, params?: EventParams) {
   if (typeof window === "undefined" || !window.gtag) return;
+  // Dev console log for verification without live GA4
+  if (process.env.NODE_ENV === "development") {
+    console.log(`[GA4] ${eventName}`, params ?? {});
+  }
   window.gtag("event", eventName, params);
 }
 
@@ -28,8 +32,16 @@ function pixel(eventName: string, params?: EventParams) {
 
 // ── Public event helpers ──────────────────────────────────────────────────────
 
-export function trackLeadFormSubmit(params?: EventParams) {
-  ga("lead_form_submit", params);
+export function trackQuoteStepStarted(step: number, label?: string) {
+  ga("quote_step_started", { step, label });
+}
+
+export function trackQuoteStepCompleted(step: number, label?: string) {
+  ga("quote_step_completed", { step, label });
+}
+
+export function trackQuoteSubmitted(params?: EventParams) {
+  ga("quote_submitted", params);
   pixel("Lead", params);
 }
 
@@ -41,10 +53,6 @@ export function trackCallButtonClick() {
 export function trackWhatsAppClick() {
   ga("whatsapp_click");
   pixel("Contact");
-}
-
-export function trackQuoteStepCompleted(step: number) {
-  ga("quote_step_completed", { step });
 }
 
 /** Fire event then redirect — won't drop the event. */

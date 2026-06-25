@@ -17,12 +17,21 @@ const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://cleaningleadsgrowth.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? `https://${siteConfig.domain}`),
   title: {
     default: `${siteConfig.name} — ${siteConfig.tagline}`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  keywords: [
+    "cleaning service",
+    "house cleaning",
+    "office cleaning",
+    "residential cleaning",
+    "commercial cleaning",
+    "cleaning near me",
+    "book a cleaner",
+  ],
   openGraph: {
     type:        "website",
     siteName:    siteConfig.name,
@@ -47,6 +56,46 @@ export default function RootLayout({
   return (
     <html lang="en" className={poppins.variable}>
       <head>
+        {/* LocalBusiness + Service JSON-LD schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": ["LocalBusiness", "HousePainter"],
+              "name": siteConfig.name,
+              "description": siteConfig.description,
+              "url": `https://${siteConfig.domain}`,
+              "telephone": siteConfig.phone,
+              "email": siteConfig.email,
+              "openingHours": "Mo-Fr 09:00-18:00",  // PLACEHOLDER — client to confirm
+              "priceRange": "$$",                    // PLACEHOLDER — client to confirm
+              "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Cleaning Services",
+                "itemListElement": [
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Residential House Cleaning",
+                      "description": "Professional residential house cleaning — standard, deep clean, and move-in/move-out.",
+                    },
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Commercial Office Cleaning",
+                      "description": "Commercial cleaning for offices, retail, warehouses, and medical facilities.",
+                    },
+                  },
+                ],
+              },
+            }),
+          }}
+        />
+
         {/* GA4 — loads only when NEXT_PUBLIC_GA_ID is set */}
         {GA_ID && (
           <>

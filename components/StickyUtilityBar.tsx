@@ -22,7 +22,7 @@ export default function StickyUtilityBar() {
     await fireAndRedirect(
       trackWhatsAppClick,
       `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(
-        "Hi! I'm interested in getting cleaning leads for my business."
+        "Hi! I'd like to get a quote for a cleaning service."
       )}`,
     );
   };

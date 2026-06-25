@@ -23,7 +23,7 @@ export default function SiteNav() {
     await fireAndRedirect(
       trackWhatsAppClick,
       `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(
-        "Hi! I'm interested in getting cleaning leads for my business."
+        "Hi! I'd like to get a quote for a cleaning service."
       )}`,
     );
   };
@@ -165,7 +165,7 @@ export default function SiteNav() {
               ))}
               <Button asChild variant="primary" size="md" className="mt-2 justify-center">
                 <Link href="/get-quote" onClick={() => setOpen(false)}>
-                  Get Your Leads Today
+                  Get a Free Quote
                 </Link>
               </Button>
             </nav>

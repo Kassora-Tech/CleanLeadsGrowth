@@ -19,16 +19,16 @@ function IgIcon({ className }: { className?: string }) {
 import { siteConfig } from "@/lib/siteConfig";
 
 const serviceLinks = [
-  { label: "Residential Cleaning Leads",       href: "/services/residential-cleaning-leads" },
-  { label: "Commercial Cleaning Leads",         href: "/services/commercial-cleaning-leads" },
-  { label: "Move-In / Move-Out Leads",          href: "/services/move-in-move-out-leads" },
-  { label: "Carpet & Upholstery Leads",         href: "/services/carpet-upholstery-leads" },
-  { label: "Window & Pressure Washing Leads",   href: "/services/window-pressure-washing-leads" },
+  { label: "Residential Cleaning",   href: "/services/residential" },
+  { label: "Commercial Cleaning",    href: "/services/commercial" },
+  { label: "Move-In / Move-Out",     href: "/get-quote" },
+  { label: "Deep Clean",             href: "/get-quote" },
+  { label: "Carpet & Upholstery",    href: "/get-quote" },
 ];
 
 const companyLinks = [
   { label: "How It Works", href: "/#how-it-works" },
-  { label: "Pricing",      href: "/pricing" },
+  { label: "Reviews",      href: "/#reviews" },
   { label: "About Us",     href: "/about" },
   { label: "Contact",      href: "/contact" },
   { label: "Get a Quote",  href: "/get-quote" },
